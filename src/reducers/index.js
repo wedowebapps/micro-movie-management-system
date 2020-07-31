@@ -1,13 +1,13 @@
-/* 
+/*
  * combines all th existing reducers
  */
-import { combineReducers } from 'redux';
-import auth from './auth';
-import dashboardReducer from '../modules/dashboard/reducer'
+import { combineReducers } from "redux";
+import dashboardReducer from "../modules/dashboard/reducer";
+import listReducer from "../modules/myList/reducer";
 
 const reducers = combineReducers({
-  auth: auth,
   dashboard: dashboardReducer,
+  list: listReducer,
 });
 
 export default reducers;

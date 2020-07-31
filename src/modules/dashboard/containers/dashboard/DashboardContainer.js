@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import DashboardView from "./DashboardView";
 import * as dashboardActions from "../../actions";
+import * as listActions from "../../../myList/actions";
 
 export class DashboardContainer extends Component {
   componentDidMount() {
@@ -17,13 +18,16 @@ const mapStateToProps = (state) => ({
   movieList: state.dashboard.movies,
   response: state.dashboard.response,
   totalResults: state.dashboard.totalResults,
-  listError: state.dashboard.error
+  listError: state.dashboard.error,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovies: (filters) =>
       dispatch(dashboardActions.fetchMovies({ filters })),
+    setMyListMovies: (data) => dispatch(listActions.setMyListMovies({ data })),
+    setMyWatchedMovies: (data) =>
+      dispatch(listActions.setMyWatchedMovies({ data })),
   };
 };
 

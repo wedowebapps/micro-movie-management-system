@@ -1,6 +1,6 @@
 import React from "react";
 import { ListItemContainer, MovieTitle, MovieYear } from "./styles";
-import { Button } from "reactstrap";
+import { Button, Input } from "reactstrap";
 
 const ListItem = (props) => {
   return (
@@ -15,25 +15,15 @@ const ListItem = (props) => {
           />
         )}
       </div>
+      <div>
+        <Input
+          type="checkbox"
+          onChange={(e) => props.onCheck(props.data)}
+        />
+      </div>
       <div className="movie-detail">
         <MovieTitle>{props.data.Title}</MovieTitle>
         <MovieYear>Year:- {props.data.Year}</MovieYear>
-      </div>
-      <div>
-        <Button
-          className="mx-1"
-          color="primary"
-          onClick={() => props.onAddToMyList(props.data)}
-        >
-          Add to My list
-        </Button>
-        <Button
-          className="mx-1"
-          color="primary"
-          onClick={() => props.onAddToMyWatchedList(props.data)}
-        >
-          Add to My watched list
-        </Button>
       </div>
     </ListItemContainer>
   );

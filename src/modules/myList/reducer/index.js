@@ -1,39 +1,22 @@
-import { 
-  SET_DASHBOARD, UPDATE_DASHBOARD,
-  ENABLE_LOADER, DISABLE_LOADER
-} from "../actions/types";
+import * as types from "../actions/types";
 
 const initialState = {
-  data: "Demo",
-  isLoading: false,
-  userData: [],
+  myList: [],
+  myWatchedList: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    
-    case DISABLE_LOADER:
+    case types.SET_MY_WATCHED_MOVIES:
       return {
         ...state,
-        isLoading: false,
-      }
-
-    case ENABLE_LOADER:
-      return {
-        ...state,
-        isLoading: true,
-      }
-
-    case SET_DASHBOARD:
-      return {
-        ...state,
-        userData: action.data.results[0],
+        myWatchedList: action.data.data,
       };
-    
-    case UPDATE_DASHBOARD:
+    case types.SET_MY_LIST_MOVIES:
       return {
         ...state,
-      }
+        myList: action.data.data,
+      };
 
     default:
       return state;

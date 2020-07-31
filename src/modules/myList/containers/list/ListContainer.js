@@ -9,7 +9,8 @@ export class ListContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoading: state.dashboard.isLoading,
+  myList: state.list.myList,
+  myWatchedList: state.list.myWatchedList,
 });
 
 export default connect(mapStateToProps)(ListContainer);

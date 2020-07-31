@@ -1,26 +1,11 @@
-import { 
-  FETCH_DASHBOARD, SET_DASHBOARD, UPDATE_DASHBOARD,
-  ENABLE_LOADER, DISABLE_LOADER,
-} from '../actions/types';
+import * as types from "../actions/types";
 
-export const enableLoader = () => ({
-  type: ENABLE_LOADER,
-});
-
-export const disableLoader = () => ({
-  type: DISABLE_LOADER,
-});
-
-export const fetchDashoard = () => ({
-  type: FETCH_DASHBOARD,
-});
-
-export const setDashboard = (data) => ({
-  type: SET_DASHBOARD,
+export const setMyListMovies = (data) => ({
+  type: types.SET_MY_LIST_MOVIES,
   data,
 });
 
-export const updateDashboard = (data) => ({
-  type: UPDATE_DASHBOARD,
+export const setMyWatchedMovies = (data) => ({
+  type: types.SET_MY_WATCHED_MOVIES,
   data,
 });

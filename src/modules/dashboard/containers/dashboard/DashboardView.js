@@ -1,33 +1,24 @@
 import React, { useState } from "react";
 import ListItem from "../../../../components/ListItem";
 import { ListContainer } from "./styles";
-import { Row, Col, Alert } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import FilterSelect from "../../../../components/FilterSelect";
 import { filterYears } from "../../../../utils/helper";
 import Alerts from "../../../../components/Alerts";
+import { useHistory } from "react-router-dom";
 
 const DashboardView = (props) => {
-  const [myListMovies, setMyList] = useState([]);
-  const [myWatchedListMovies, setMyWatchedList] = useState([]);
+  let history = useHistory();
+  const [checkedMovies, setCheckedMovies] = useState([]);
 
-  const addToMyList = (selected) => {
-    const index = myListMovies.indexOf(selected);
+  const addToCheckedList = (selected) => {
+    const index = checkedMovies.indexOf(selected);
     if (index < 0) {
-      myListMovies.push(selected);
+      checkedMovies.push(selected);
     } else {
-      myListMovies.splice(index, 1);
+      checkedMovies.splice(index, 1);
     }
-    setMyList([...myListMovies]);
-  };
-
-  const addToMyWatchedList = (selected) => {
-    const index = myWatchedListMovies.indexOf(selected);
-    if (index < 0) {
-      myWatchedListMovies.push(selected);
-    } else {
-      myWatchedListMovies.splice(index, 1);
-    }
-    setMyWatchedList([...myWatchedListMovies]);
+    setCheckedMovies([...checkedMovies]);
   };
 
   const onChangeFilter = (value) => {
@@ -37,14 +28,36 @@ const DashboardView = (props) => {
   return (
     <ListContainer>
       <Row>
-        <Col md={4}>
+        <Col md={2}>
           <FilterSelect
             label="Filter by year"
             options={filterYears}
             onSelect={(val) => onChangeFilter(val)}
           />
+          <Button
+            className="my-3"
+            color="primary"
+            onClick={() => props.setMyListMovies(checkedMovies)}
+          >
+            Add to My list
+          </Button>
+          <Button
+            className="my-3"
+            color="primary"
+            onClick={() => props.setMyWatchedMovies(checkedMovies)}
+          >
+            Add to My watched list
+          </Button>
+          <Button
+            className="my-3"
+            color="primary"
+            onClick={() => history.push("/my-list")}
+            outline
+          >
+            Go to My List
+          </Button>
         </Col>
-        <Col md={8}>
+        <Col md={10}>
           {props.response === "True" ? (
             <Row>
               {props.movieList.map((item) => {
@@ -52,10 +65,7 @@ const DashboardView = (props) => {
                   <Col md={4} key={item.imdbID}>
                     <ListItem
                       data={item}
-                      onAddToMyList={(movie) => addToMyList(movie)}
-                      onAddToMyWatchedList={(movie) =>
-                        addToMyWatchedList(movie)
-                      }
+                      onCheck={(movie) => addToCheckedList(movie)}
                     />
                   </Col>
                 );
