@@ -1,6 +1,6 @@
 import React from "react";
 import { ListItemContainer, MovieTitle, MovieYear } from "./styles";
-import { Button, Input, Container, Row, Col } from "reactstrap";
+import { Input, Container, Row, Col } from "reactstrap";
 
 const ListItem = (props) => {
   return (

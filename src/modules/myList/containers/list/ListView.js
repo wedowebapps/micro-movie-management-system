@@ -12,8 +12,7 @@ const ListView = (props) => {
   );
 
   const toggleTrueFalse = () => {
-    setToggled(!isToggled)
-    setCheckedMovies([])
+    setToggled(!isToggled);
   };
 
   const addToUnCheckedList = (selected) => {
@@ -31,16 +30,22 @@ const ListView = (props) => {
     if (isToggled) {
       newArray = myListMovies.filter((val) => !checkedMovies.includes(val));
       setMyListMovies(newArray);
+      props.setMyListMovies(newArray);
     } else {
-      newArray = myWatchedListMovies.filter((val) => !checkedMovies.includes(val));
+      newArray = myWatchedListMovies.filter(
+        (val) => !checkedMovies.includes(val)
+      );
       setMyWatchedListMovies(newArray);
+      props.setMyWatchedMovies(newArray);
     }
   };
 
   const addToMyWatchedMovies = () => {
     let newArray = myWatchedListMovies.concat(checkedMovies);
     setMyWatchedListMovies(newArray);
+    props.setMyWatchedMovies(newArray);
   };
+
   return (
     <ListContainer>
       <Row>
