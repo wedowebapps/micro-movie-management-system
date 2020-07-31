@@ -1,13 +1,64 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import ListView from "./ListView";
 import * as listActions from "../../actions";
 
-export class ListContainer extends Component {
-  render() {
-    return <ListView {...this.props} />;
-  }
-}
+const ListContainer = (props) => {
+  const [checkedMovies, setCheckedMovies] = useState([]);
+  const [isToggled, setToggled] = useState(true);
+  const [myListMovies, setMyListMovies] = useState(props.myList);
+  const [myWatchedListMovies, setMyWatchedListMovies] = useState(
+    props.myWatchedList
+  );
+
+  const toggleTrueFalse = () => {
+    setToggled(!isToggled);
+  };
+
+  const addToUnCheckedList = (selected) => {
+    const index = checkedMovies.indexOf(selected);
+    if (index < 0) {
+      checkedMovies.push(selected);
+    } else {
+      checkedMovies.splice(index, 1);
+    }
+    setCheckedMovies([...checkedMovies]);
+  };
+
+  const removeMovieFromList = () => {
+    let newArray;
+    if (isToggled) {
+      newArray = myListMovies.filter((val) => !checkedMovies.includes(val));
+      setMyListMovies(newArray);
+      props.setMyListMovies(newArray);
+    } else {
+      newArray = myWatchedListMovies.filter(
+        (val) => !checkedMovies.includes(val)
+      );
+      setMyWatchedListMovies(newArray);
+      props.setMyWatchedMovies(newArray);
+    }
+  };
+
+  const addToMyWatchedMovies = () => {
+    let newArray = myWatchedListMovies.concat(checkedMovies);
+    setMyWatchedListMovies(newArray);
+    props.setMyWatchedMovies(newArray);
+  };
+
+  return (
+    <ListView
+      myWatchedListMovies={myWatchedListMovies}
+      myListMovies={myListMovies}
+      checkedMovies={checkedMovies}
+      isToggled={isToggled}
+      addToMyWatchedMovies={() => addToMyWatchedMovies()}
+      removeMovieFromList={() => removeMovieFromList()}
+      addToUnCheckedList={(val) => addToUnCheckedList(val)}
+      toggleTrueFalse={() => toggleTrueFalse()}
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
   myList: state.list.myList,

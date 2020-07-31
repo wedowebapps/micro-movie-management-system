@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ListItem from "../../../../components/ListItem";
-import { ListContainer } from "./styles";
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button, Spinner, Container } from "reactstrap";
 import FilterSelect from "../../../../components/FilterSelect";
 import { filterYears } from "../../../../utils/helper";
 import Alerts from "../../../../components/Alerts";
@@ -9,42 +8,29 @@ import { useHistory } from "react-router-dom";
 
 const DashboardView = (props) => {
   let history = useHistory();
-  const [checkedMovies, setCheckedMovies] = useState([]);
-
-  const addToCheckedList = (selected) => {
-    const index = checkedMovies.indexOf(selected);
-    if (index < 0) {
-      checkedMovies.push(selected);
-    } else {
-      checkedMovies.splice(index, 1);
-    }
-    setCheckedMovies([...checkedMovies]);
-  };
-
-  const onChangeFilter = (value) => {
-    props.fetchMovies({ y: value });
-  };
 
   return (
-    <ListContainer>
-      <Row>
+    <Container>
+      <Row className="mt-3">
         <Col md={2}>
           <FilterSelect
             label="Filter by year"
             options={filterYears}
-            onSelect={(val) => onChangeFilter(val)}
+            onSelect={(val) => props.onChangeFilter(val)}
           />
           <Button
             className="my-3"
             color="primary"
-            onClick={() => props.setMyListMovies(checkedMovies)}
+            onClick={() => props.setMyListMovies(props.checkedMovies)}
+            disabled={props.checkedMovies.length > 0 ? false : true}
           >
             Add to My list
           </Button>
           <Button
             className="my-3"
             color="primary"
-            onClick={() => props.setMyWatchedMovies(checkedMovies)}
+            onClick={() => props.setMyWatchedMovies(props.checkedMovies)}
+            disabled={props.checkedMovies.length > 0 ? false : true}
           >
             Add to My watched list
           </Button>
@@ -58,14 +44,19 @@ const DashboardView = (props) => {
           </Button>
         </Col>
         <Col md={10}>
+          {props.isLoading && (
+            <Row className="justify-content-center mt-5">
+              <Spinner size="lg" color="primary" />
+            </Row>
+          )}
           {props.response === "True" ? (
             <Row>
               {props.movieList.map((item) => {
                 return (
-                  <Col md={4} key={item.imdbID}>
+                  <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => addToCheckedList(movie)}
+                      onCheck={(movie) => props.addToCheckedList(movie)}
                     />
                   </Col>
                 );
@@ -76,7 +67,7 @@ const DashboardView = (props) => {
           )}
         </Col>
       </Row>
-    </ListContainer>
+    </Container>
   );
 };
 

@@ -1,88 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ListItem from "../../../../components/ListItem";
-import { ListContainer } from "./styles";
-import { Row, Col, Button } from "reactstrap";
+import { Row, Col, Button, Container } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const ListView = (props) => {
-  const [checkedMovies, setCheckedMovies] = useState([]);
-  const [isToggled, setToggled] = useState(true);
-  const [myListMovies, setMyListMovies] = useState(props.myList);
-  const [myWatchedListMovies, setMyWatchedListMovies] = useState(
-    props.myWatchedList
-  );
-
-  const toggleTrueFalse = () => {
-    setToggled(!isToggled);
-  };
-
-  const addToUnCheckedList = (selected) => {
-    const index = checkedMovies.indexOf(selected);
-    if (index < 0) {
-      checkedMovies.push(selected);
-    } else {
-      checkedMovies.splice(index, 1);
-    }
-    setCheckedMovies([...checkedMovies]);
-  };
-
-  const removeMovieFromList = () => {
-    let newArray;
-    if (isToggled) {
-      newArray = myListMovies.filter((val) => !checkedMovies.includes(val));
-      setMyListMovies(newArray);
-      props.setMyListMovies(newArray);
-    } else {
-      newArray = myWatchedListMovies.filter(
-        (val) => !checkedMovies.includes(val)
-      );
-      setMyWatchedListMovies(newArray);
-      props.setMyWatchedMovies(newArray);
-    }
-  };
-
-  const addToMyWatchedMovies = () => {
-    let newArray = myWatchedListMovies.concat(checkedMovies);
-    setMyWatchedListMovies(newArray);
-    props.setMyWatchedMovies(newArray);
-  };
+  let history = useHistory();
 
   return (
-    <ListContainer>
-      <Row>
+    <Container>
+      <Row className="mt-3">
         <Col md={2}>
           <Button
             className="my-3"
             color="primary"
-            onClick={() => toggleTrueFalse()}
+            onClick={() => props.toggleTrueFalse()}
           >
-            {isToggled ? "Switch to My watched list" : "Switch to My list"}
+            {props.isToggled ? "Switch to My watched list" : "Switch to My list"}
           </Button>
           <Button
             className="my-3"
             color="primary"
-            onClick={() => removeMovieFromList()}
+            onClick={() => props.removeMovieFromList()}
           >
-            {isToggled ? "Remove from My list" : "Remove from My watched list"}
+            {props.isToggled ? "Remove from My list" : "Remove from My watched list"}
           </Button>
-          {isToggled && (
+          {props.isToggled && (
             <Button
               className="my-3"
               color="primary"
-              onClick={() => addToMyWatchedMovies()}
+              onClick={() => props.addToMyWatchedMovies()}
             >
               Add My watched list
             </Button>
           )}
+          <Button
+            className="my-3"
+            color="primary"
+            onClick={() => history.push("/")}
+            outline
+          >
+            Back to Main list
+          </Button>
         </Col>
         <Col md={10}>
-          {isToggled ? (
+          {props.isToggled ? (
             <Row>
-              {myListMovies.map((item) => {
+              {props.myListMovies.map((item) => {
                 return (
-                  <Col md={4} key={item.imdbID}>
+                  <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => addToUnCheckedList(movie)}
+                      onCheck={(movie) => props.addToUnCheckedList(movie)}
                     />
                   </Col>
                 );
@@ -90,12 +58,12 @@ const ListView = (props) => {
             </Row>
           ) : (
             <Row>
-              {myWatchedListMovies.map((item) => {
+              {props.myWatchedListMovies.map((item) => {
                 return (
-                  <Col md={4} key={item.imdbID}>
+                  <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => addToUnCheckedList(movie)}
+                      onCheck={(movie) => props.addToUnCheckedList(movie)}
                     />
                   </Col>
                 );
@@ -104,7 +72,7 @@ const ListView = (props) => {
           )}
         </Col>
       </Row>
-    </ListContainer>
+    </Container>
   );
 };
 
