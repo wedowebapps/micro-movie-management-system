@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { ListItemContainer, MovieTitle, MovieYear } from "./styles";
-import { Input, Label, Button } from "reactstrap";
+import { Button } from "reactstrap";
 
 const ListItem = (props) => {
   return (
@@ -21,13 +21,14 @@ const ListItem = (props) => {
       </div>
       <div>
         <Button
-          className="mr-2"
+          className="mx-1"
           color="primary"
           onClick={() => props.onAddToMyList(props.data)}
         >
           Add to My list
         </Button>
         <Button
+          className="mx-1"
           color="primary"
           onClick={() => props.onAddToMyWatchedList(props.data)}
         >
