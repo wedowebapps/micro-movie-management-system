@@ -30,7 +30,9 @@ const DashboardView = (props) => {
     setMyWatchedList([...myWatchedListMovies]);
   };
 
-  const onChangeFilter = (value) => {};
+  const onChangeFilter = (value) => {
+    props.fetchMovies({ y: value });
+  };
 
   return (
     <ListContainer>
@@ -60,7 +62,7 @@ const DashboardView = (props) => {
               })}
             </Row>
           ) : (
-            <Alerts note="Something went wrong" />
+            <Alerts note={props.listError} />
           )}
         </Col>
       </Row>

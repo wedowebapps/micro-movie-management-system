@@ -8,8 +8,9 @@ export const disableLoader = () => ({
   type: types.DISABLE_LOADER,
 });
 
-export const fetchMovies = () => ({
+export const fetchMovies = ({ filters }) => ({
   type: types.FETCH_MOVIES,
+  filters,
 });
 
 export const setMovies = (data) => ({

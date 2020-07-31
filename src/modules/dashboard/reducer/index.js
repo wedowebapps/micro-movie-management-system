@@ -5,6 +5,7 @@ const initialState = {
   response: false,
   totalResults: 0,
   movies: [],
+  error: "",
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +28,7 @@ export default (state = initialState, action) => {
         movies: action.data.Search,
         response: action.data.Response,
         totalResults: action.data.totalResults,
+        error: action.data.Error,
       };
 
     default:

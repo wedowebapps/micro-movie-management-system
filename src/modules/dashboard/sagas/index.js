@@ -4,13 +4,13 @@ import * as types from "../actions/types";
 
 import * as dashboardApi from "../api/methods";
 
-function* fetchMovie() {
+function* fetchMovie({ filters }) {
   try {
     yield put(dashboardActions.enableLoader());
-    let data = yield call(dashboardApi.fetchMovies);
+    let data = yield call(dashboardApi.fetchMovies, filters);
     yield put(dashboardActions.setMovies(data));
     yield put(dashboardActions.disableLoader());
-  } catch(err) {
+  } catch (err) {
     err.then((response) => {
       console.log(response.message);
     });

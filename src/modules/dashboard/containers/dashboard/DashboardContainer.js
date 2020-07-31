@@ -17,11 +17,13 @@ const mapStateToProps = (state) => ({
   movieList: state.dashboard.movies,
   response: state.dashboard.response,
   totalResults: state.dashboard.totalResults,
+  listError: state.dashboard.error
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovies: () => dispatch(dashboardActions.fetchMovies()),
+    fetchMovies: (filters) =>
+      dispatch(dashboardActions.fetchMovies({ filters })),
   };
 };
 
