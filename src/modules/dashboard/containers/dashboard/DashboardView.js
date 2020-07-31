@@ -1,20 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export class DashboardView extends Component {
-  
-  static propTypes = {
-
-  }
-
   render() {
+    const { movieList, response, totalResults, isLoading } = this.props;
     return (
       <div>
-        <div onClick={() => this.props.onButtonPress() }>DEMO </div>
-
-        {this.props.isLoading && <h1>LOADING</h1>}
+        <div>{response}</div>
+        <div>{totalResults}</div>
       </div>
-    )
+    );
   }
 }
 
-export default DashboardView
+export default DashboardView;

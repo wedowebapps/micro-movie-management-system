@@ -1,30 +1,28 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import DashboardView from './DashboardView'
-import * as dashboardActions from '../../actions'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import DashboardView from "./DashboardView";
+import * as dashboardActions from "../../actions";
 
 export class DashboardContainer extends Component {
-
-  onButtonPress = () => {
-    this.props.fetchDashoard();
+  componentDidMount() {
+    this.props.fetchMovies();
   }
-
   render() {
-    return (
-      <DashboardView {...this.props} onButtonPress={this.onButtonPress} />
-    )
+    return <DashboardView {...this.props} />;
   }
 }
 
 const mapStateToProps = (state) => ({
   isLoading: state.dashboard.isLoading,
-})
+  movieList: state.dashboard.movies,
+  response: state.dashboard.response,
+  totalResults: state.dashboard.totalResults,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchDashoard: () => dispatch(dashboardActions.fetchDashoard()),
+    fetchMovies: () => dispatch(dashboardActions.fetchMovies()),
   };
-}
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

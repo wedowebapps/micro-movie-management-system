@@ -1,5 +1,5 @@
 const routes = {
-  FETCH_MOVIES: '',
+  FETCH_DATA: 'api',
 };
 
 export default routes;

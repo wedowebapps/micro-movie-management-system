@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Main from "./views";
-// import Dashboard from "./views/app";
 import Dashboard from "./modules/dashboard/containers/dashboard";
+import MyList from "./modules/myList/containers/list";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +16,7 @@ class App extends Component {
       <div>
         <Router>
           <Route exact path="/" component={Dashboard} />
-          <Route exact path="/my-list" component={Main} />
+          <Route exact path="/my-list" component={MyList} />
         </Router>
       </div>
     );
