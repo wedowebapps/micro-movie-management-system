@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ListItem from "../../../../components/ListItem";
 import { ListContainer } from "./styles";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Alert } from "reactstrap";
 import FilterSelect from "../../../../components/FilterSelect";
 import { filterYears } from "../../../../utils/helper";
+import Alerts from "../../../../components/Alerts";
 
 const DashboardView = (props) => {
   const [myListMovies, setMyList] = useState([]);
@@ -29,9 +30,7 @@ const DashboardView = (props) => {
     setMyWatchedList([...myWatchedListMovies]);
   };
 
-  const onChangeFilter = (value) => {
-    
-  };
+  const onChangeFilter = (value) => {};
 
   return (
     <ListContainer>
@@ -44,19 +43,25 @@ const DashboardView = (props) => {
           />
         </Col>
         <Col md={8}>
-          <Row>
-            {props.movieList.map((item) => {
-              return (
-                <Col md={4} key={item.imdbID}>
-                  <ListItem
-                    data={item}
-                    onAddToMyList={(movie) => addToMyList(movie)}
-                    onAddToMyWatchedList={(movie) => addToMyWatchedList(movie)}
-                  />
-                </Col>
-              );
-            })}
-          </Row>
+          {props.response === "True" ? (
+            <Row>
+              {props.movieList.map((item) => {
+                return (
+                  <Col md={4} key={item.imdbID}>
+                    <ListItem
+                      data={item}
+                      onAddToMyList={(movie) => addToMyList(movie)}
+                      onAddToMyWatchedList={(movie) =>
+                        addToMyWatchedList(movie)
+                      }
+                    />
+                  </Col>
+                );
+              })}
+            </Row>
+          ) : (
+            <Alerts note="Something went wrong" />
+          )}
         </Col>
       </Row>
     </ListContainer>
