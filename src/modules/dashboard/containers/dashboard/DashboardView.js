@@ -21,7 +21,7 @@ const DashboardView = (props) => {
           <Button
             className="my-3"
             color="primary"
-            onClick={() => props.setMyListMovies(props.checkedMovies)}
+            onClick={() => props.addToMyList()}
             disabled={props.checkedMovies.length > 0 ? false : true}
           >
             Add to My list
@@ -29,7 +29,7 @@ const DashboardView = (props) => {
           <Button
             className="my-3"
             color="primary"
-            onClick={() => props.setMyWatchedMovies(props.checkedMovies)}
+            onClick={() => props.addToMyWatchedList()}
             disabled={props.checkedMovies.length > 0 ? false : true}
           >
             Add to My watched list

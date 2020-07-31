@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import DashboardView from "./DashboardView";
 import * as dashboardActions from "../../actions";
 import * as listActions from "../../../myList/actions";
+import Toast from "../../../../components/Toast";
+import toast from "../../../../utils/toast";
 
 const DashboardContainer = (props) => {
   useEffect(() => {
@@ -24,13 +26,28 @@ const DashboardContainer = (props) => {
     props.fetchMovies({ y: value });
   };
 
+  const addToMyList = () => {
+    props.setMyListMovies(props.checkedMovies);
+    toast.success("Added to my list");
+  };
+
+  const addToMyWatchedList = () => {
+    props.setMyWatchedMovies(props.checkedMovies);
+    toast.success("Added to watched list");
+  };
+
   return (
-    <DashboardView
-      {...props}
-      checkedMovies={checkedMovies}
-      onChangeFilter={(val) => onChangeFilter(val)}
-      addToCheckedList={(val) => addToCheckedList(val)}
-    />
+    <>
+      <Toast />
+      <DashboardView
+        {...props}
+        checkedMovies={checkedMovies}
+        onChangeFilter={(val) => onChangeFilter(val)}
+        addToCheckedList={(val) => addToCheckedList(val)}
+        addToMyList={() => addToMyList()}
+        addToMyWatchedList={() => addToMyWatchedList()}
+      />
+    </>
   );
 };
 

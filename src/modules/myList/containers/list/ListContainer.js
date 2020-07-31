@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import ListView from "./ListView";
 import * as listActions from "../../actions";
+import toast from '../../../../utils/toast'
 
 const ListContainer = (props) => {
   const [checkedMovies, setCheckedMovies] = useState([]);
@@ -31,12 +32,14 @@ const ListContainer = (props) => {
       newArray = myListMovies.filter((val) => !checkedMovies.includes(val));
       setMyListMovies(newArray);
       props.setMyListMovies(newArray);
+      toast.success("Removed from list")
     } else {
       newArray = myWatchedListMovies.filter(
         (val) => !checkedMovies.includes(val)
       );
       setMyWatchedListMovies(newArray);
       props.setMyWatchedMovies(newArray);
+      toast.success("Removed from list")
     }
   };
 
@@ -44,6 +47,7 @@ const ListContainer = (props) => {
     let newArray = myWatchedListMovies.concat(checkedMovies);
     setMyWatchedListMovies(newArray);
     props.setMyWatchedMovies(newArray);
+    toast.success("Added to watched list")
   };
 
   return (
