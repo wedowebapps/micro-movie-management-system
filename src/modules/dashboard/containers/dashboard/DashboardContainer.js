@@ -27,12 +27,12 @@ const DashboardContainer = (props) => {
   };
 
   const addToMyList = () => {
-    props.setMyListMovies(props.checkedMovies);
+    props.setMyListMovies(checkedMovies);
     toast.success("Added to my list");
   };
 
   const addToMyWatchedList = () => {
-    props.setMyWatchedMovies(props.checkedMovies);
+    props.setMyWatchedMovies(checkedMovies);
     toast.success("Added to watched list");
   };
 
