@@ -10,7 +10,7 @@ const ListItem = (props) => {
           <Input
             className="ml-2 mt-3"
             type="checkbox"
-            onChange={(e) => props.onCheck(props.data)}
+            onChange={(e) => props.onCheck(props.data, e)}
           />
         </Col>
         <Col md={10}>

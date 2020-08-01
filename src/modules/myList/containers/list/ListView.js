@@ -15,20 +15,27 @@ const ListView = (props) => {
             color="primary"
             onClick={() => props.toggleTrueFalse()}
           >
-            {props.isToggled ? "Switch to My watched list" : "Switch to My list"}
+            {props.isToggled
+              ? "Switch to My watched list"
+              : "Switch to My list"}
           </Button>
           <Button
             className="my-3"
             color="primary"
             onClick={() => props.removeMovieFromList()}
           >
-            {props.isToggled ? "Remove from My list" : "Remove from My watched list"}
+            {props.isToggled
+              ? "Remove from My list"
+              : "Remove from My watched list"}
           </Button>
           {props.isToggled && (
             <Button
               className="my-3"
               color="primary"
-              onClick={() => props.addToMyWatchedMovies()}
+              onClick={() => {
+                props.addToMyWatchedMovies();
+
+              }}
             >
               Add My watched list
             </Button>
@@ -45,12 +52,12 @@ const ListView = (props) => {
         <Col md={10}>
           {props.isToggled ? (
             <Row>
-              {props.myListMovies.map((item) => {
+              {props.myListMovies.map((item, i) => {
                 return (
                   <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => props.addToUnCheckedList(movie)}
+                      onCheck={(movie, e) => props.addToUnCheckedList(movie, e)}
                     />
                   </Col>
                 );
@@ -58,12 +65,12 @@ const ListView = (props) => {
             </Row>
           ) : (
             <Row>
-              {props.myWatchedListMovies.map((item) => {
+              {props.myWatchedListMovies.map((item, i) => {
                 return (
                   <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => props.addToUnCheckedList(movie)}
+                      onCheck={(movie, e) => props.addToUnCheckedList(movie, e)}
                     />
                   </Col>
                 );

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import ListView from "./ListView";
 import * as listActions from "../../actions";
-import toast from '../../../../utils/toast'
+import toast from "../../../../utils/toast";
 
 const ListContainer = (props) => {
   const [checkedMovies, setCheckedMovies] = useState([]);
@@ -11,19 +11,25 @@ const ListContainer = (props) => {
   const [myWatchedListMovies, setMyWatchedListMovies] = useState(
     props.myWatchedList
   );
+  const [checkedBox, setCheckedBox] = useState([]);
 
   const toggleTrueFalse = () => {
     setToggled(!isToggled);
+    checkedBox.map((item) => (item.checked = false));
+    setCheckedMovies([]);
   };
 
-  const addToUnCheckedList = (selected) => {
+  const addToUnCheckedList = (selected, e) => {
     const index = checkedMovies.indexOf(selected);
     if (index < 0) {
       checkedMovies.push(selected);
+      checkedBox.push(e.target);
     } else {
       checkedMovies.splice(index, 1);
+      checkedBox.splice(index, 1);
     }
     setCheckedMovies([...checkedMovies]);
+    setCheckedBox([...checkedBox]);
   };
 
   const removeMovieFromList = () => {
@@ -31,15 +37,18 @@ const ListContainer = (props) => {
     if (isToggled) {
       newArray = myListMovies.filter((val) => !checkedMovies.includes(val));
       setMyListMovies(newArray);
+      setCheckedMovies([]);
       props.setMyListMovies(newArray);
-      toast.success("Removed from list")
+      toast.success("Removed from list");
     } else {
       newArray = myWatchedListMovies.filter(
         (val) => !checkedMovies.includes(val)
       );
+      console.log(newArray);
+      setCheckedMovies([]);
       setMyWatchedListMovies(newArray);
       props.setMyWatchedMovies(newArray);
-      toast.success("Removed from list")
+      toast.success("Removed from list");
     }
   };
 
@@ -47,7 +56,8 @@ const ListContainer = (props) => {
     let newArray = myWatchedListMovies.concat(checkedMovies);
     setMyWatchedListMovies(newArray);
     props.setMyWatchedMovies(newArray);
-    toast.success("Added to watched list")
+    checkedBox.map((item) => (item.checked = false));
+    toast.success("Added to watched list");
   };
 
   return (
@@ -58,7 +68,7 @@ const ListContainer = (props) => {
       isToggled={isToggled}
       addToMyWatchedMovies={() => addToMyWatchedMovies()}
       removeMovieFromList={() => removeMovieFromList()}
-      addToUnCheckedList={(val) => addToUnCheckedList(val)}
+      addToUnCheckedList={(val, e) => addToUnCheckedList(val, e)}
       toggleTrueFalse={() => toggleTrueFalse()}
     />
   );

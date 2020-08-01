@@ -11,15 +11,19 @@ const DashboardContainer = (props) => {
     props.fetchMovies();
   }, []);
   const [checkedMovies, setCheckedMovies] = useState([]);
+  const [checkedBox, setCheckedBox] = useState([]);
 
-  const addToCheckedList = (selected) => {
+  const addToCheckedList = (selected, e) => {
     const index = checkedMovies.indexOf(selected);
     if (index < 0) {
       checkedMovies.push(selected);
+      checkedBox.push(e.target);
     } else {
       checkedMovies.splice(index, 1);
+      checkedBox.splice(index, 1);
     }
     setCheckedMovies([...checkedMovies]);
+    setCheckedBox([...checkedBox]);
   };
 
   const onChangeFilter = (value) => {
@@ -28,11 +32,13 @@ const DashboardContainer = (props) => {
 
   const addToMyList = () => {
     props.setMyListMovies(checkedMovies);
+    checkedBox.map((item) => (item.checked = false));
     toast.success("Added to my list");
   };
 
   const addToMyWatchedList = () => {
     props.setMyWatchedMovies(checkedMovies);
+    checkedBox.map((item) => (item.checked = false));
     toast.success("Added to watched list");
   };
 
@@ -43,7 +49,7 @@ const DashboardContainer = (props) => {
         {...props}
         checkedMovies={checkedMovies}
         onChangeFilter={(val) => onChangeFilter(val)}
-        addToCheckedList={(val) => addToCheckedList(val)}
+        addToCheckedList={(val, e) => addToCheckedList(val, e)}
         addToMyList={() => addToMyList()}
         addToMyWatchedList={() => addToMyWatchedList()}
       />

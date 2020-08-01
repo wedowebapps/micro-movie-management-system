@@ -49,22 +49,21 @@ const DashboardView = (props) => {
               <Spinner size="lg" color="primary" />
             </Row>
           )}
-          {props.response === "True" ? (
+          {props.response === "True" && !props.isLoading && (
             <Row>
-              {props.movieList.map((item) => {
+              {props.movieList.map((item, i) => {
                 return (
                   <Col md={6} key={item.imdbID} className="mb-3">
                     <ListItem
                       data={item}
-                      onCheck={(movie) => props.addToCheckedList(movie)}
+                      onCheck={(movie, e) => props.addToCheckedList(movie, e)}
                     />
                   </Col>
                 );
               })}
             </Row>
-          ) : (
-            <Alerts note={props.listError} />
           )}
+          {props.response === "False" && <Alerts note={props.listError} />}
         </Col>
       </Row>
     </Container>
