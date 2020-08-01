@@ -57,6 +57,7 @@ const ListContainer = (props) => {
     setMyWatchedListMovies(newArray);
     props.setMyWatchedMovies(newArray);
     checkedBox.map((item) => (item.checked = false));
+    setCheckedMovies([]);
     toast.success("Added to watched list");
   };
 
